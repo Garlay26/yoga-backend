@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Hash;
 
 class StudentController extends Controller
 {
@@ -20,7 +21,7 @@ class StudentController extends Controller
             'message' => 'Data retrieved successfully',
             'data' => $students,
         ];
-    
+
         return response()->json($data);
     }
 
@@ -29,9 +30,66 @@ class StudentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function register(Request $request)
     {
-        //
+        $fields = $request->validate([
+            'name' => 'required',
+            'password' => 'required',
+            'email' => 'required',
+            'phone' => 'required',
+        ]);
+        $check = Student::where('email', $fields['email'])->orWhere('phone', $fields['phone'])->first();
+        if ($check) {
+            return response()->json([
+                'error' => 'Bad Request',
+                'message' => 'Student Already Exists'
+            ], 400);
+        }
+
+        $student = Student::create([
+            'name' => $fields['name'],
+            'password' => Hash::make($fields['password']),
+            'email' => $fields['email'],
+            'phone' => $fields['phone'],
+        ]);
+
+        $data = [
+            'status' => 'success',
+            'message' => 'Student Registered successfully',
+            'data' => $student,
+        ];
+
+        return response()->json($data);
+    }
+
+    public function login()
+    {
+        $fields = $request->validate([
+            'password' => 'required',
+            'email' => 'required',
+        ]);
+
+        $check = Student::where('email', $fields['email'])->first();
+        if(!$check){
+            return response()->json([
+                'error' => 'Bad Request',
+                'message' => 'Username or Password Wrong'
+            ], 400);
+        }
+
+        if(Hash::check($fields['password'], $check->password)){
+            $data = [
+                'status' => 'success',
+                'message' => 'Log In Success',
+                'data' => $check,
+            ];
+        }
+        else{
+            return response()->json([
+                'error' => 'Bad Request',
+                'message' => 'Username or Password Wrong'
+            ], 400);
+        }
     }
 
     /**
