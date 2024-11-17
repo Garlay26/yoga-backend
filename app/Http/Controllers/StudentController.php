@@ -62,7 +62,7 @@ class StudentController extends Controller
         return response()->json($data);
     }
 
-    public function login()
+    public function login(Request $request)
     {
         $fields = $request->validate([
             'password' => 'required',
@@ -83,6 +83,7 @@ class StudentController extends Controller
                 'message' => 'Log In Success',
                 'data' => $check,
             ];
+            return response()->json($data);
         }
         else{
             return response()->json([
