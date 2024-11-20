@@ -53,7 +53,7 @@ class CourseClassController extends Controller
      */
     public function enrollList(Request $request)
     {
-        $enrolls = Enroll::with('student','class')->get();
+        $enrolls = Enroll::where('student_id',$request->student_id)->with('student','class')->get();
         $data = [
             'status' => 'success',
             'message' => 'Data retrieved successfully',
