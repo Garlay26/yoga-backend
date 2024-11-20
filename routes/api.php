@@ -24,3 +24,5 @@ Route::get('student-list',[StudentController::class, 'index']);
 Route::post('student-register',[StudentController::class, 'register']);
 Route::post('student-login',[StudentController::class, 'login']);
 Route::get('class-list',[CourseClassController::class, 'index']);
+Route::post('enroll-course',[CourseClassController::class, 'enroll']);
+Route::get('enroll-list',[CourseClassController::class, 'enrollList']);

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CourseClass;
+use App\Models\Enroll;
 use Illuminate\Http\Request;
 
 class CourseClassController extends Controller
@@ -28,9 +29,20 @@ class CourseClassController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function enroll(Request $request)
     {
-        //
+        $enroll = Enroll::create([
+            'student_id' => $request->student_id,
+            'course_class_id' => $request->course_class_id,
+        ]);
+
+        $data = [
+            'status' => 'success',
+            'message' => 'Enroll successfully',
+            'data' => $enroll,
+        ];
+
+        return response()->json($data);
     }
 
     /**
@@ -39,9 +51,15 @@ class CourseClassController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function enrollList(Request $request)
     {
-        //
+        $enrolls = Enroll::with('student','class')->get();
+        $data = [
+            'status' => 'success',
+            'message' => 'Data retrieved successfully',
+            'data' => $enrolls,
+        ];
+        return response()->json($data);
     }
 
     /**
