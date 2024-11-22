@@ -75,6 +75,14 @@ class CourseClassController extends Controller
 
     public function syncCourse(Request $request)
     {
+        $coruses = $request->coruses;
+        foreach($coruses as $coruse){
+            Course::create([
+                'name' => $coruse->name,
+                'description' => $coruse->description,
+                'duration' => $coruse->duration,
+            ]);
+        }
         $data = [
             'status' => 'success',
             'message' => 'Data Sync successfully',
@@ -85,6 +93,17 @@ class CourseClassController extends Controller
 
     public function syncClass(Request $request)
     {
+        $classes = $request->classes;
+        foreach($classes as $class){
+            CourseClass::create([
+                'course_id' => $class->course_id,
+                'instructor' => $class->instructor,
+                'start_date' => $class->start_date,
+                'end_date' => $class->end_date,
+                'location' => $class->location,
+                'max_students' => $class->max_students,
+            ]);
+        }
         $data = [
             'status' => 'success',
             'message' => 'Data Sync successfully',
