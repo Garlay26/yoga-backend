@@ -62,6 +62,17 @@ class CourseClassController extends Controller
         return response()->json($data);
     }
 
+    public function allEnrollList(Request $request)
+    {
+        $enrolls = Enroll::with('student','class')->get();
+        $data = [
+            'status' => 'success',
+            'message' => 'Data retrieved successfully',
+            'data' => $enrolls,
+        ];
+        return response()->json($data);
+    }
+
     /**
      * Display the specified resource.
      *
