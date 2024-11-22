@@ -27,3 +27,5 @@ Route::get('class-list',[CourseClassController::class, 'index']);
 Route::post('enroll-course',[CourseClassController::class, 'enroll']);
 Route::get('enroll-list',[CourseClassController::class, 'enrollList']);
 Route::get('all-enroll-list',[CourseClassController::class, 'allEnrollList']);
+Route::post('sync-course',[CourseClassController::class, 'syncCourse']);
+Route::post('sync-class',[CourseClassController::class, 'syncClass']);

@@ -73,6 +73,26 @@ class CourseClassController extends Controller
         return response()->json($data);
     }
 
+    public function syncCourse(Request $request)
+    {
+        $data = [
+            'status' => 'success',
+            'message' => 'Data Sync successfully',
+            'data' => [],
+        ];
+        return response()->json($data);
+    }
+
+    public function syncClass(Request $request)
+    {
+        $data = [
+            'status' => 'success',
+            'message' => 'Data Sync successfully',
+            'data' => [],
+        ];
+        return response()->json($data);
+    }
+
     /**
      * Display the specified resource.
      *
